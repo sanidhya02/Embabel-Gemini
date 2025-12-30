@@ -27,7 +27,7 @@ public class ConfigureGoogleGeminiModels extends OpenAiCompatibleModelFactory {
     @Bean
     Llm gemini2Flash() {
         return openAiCompatibleLlm(
-                "gemini-2.0-flash-exp",
+                "gemini-2.5-flash-lite",
                 new PerTokenPricingModel(0, 0),
                 "Google Gemini",
                 LocalDate.of(2025, 1, 1)
