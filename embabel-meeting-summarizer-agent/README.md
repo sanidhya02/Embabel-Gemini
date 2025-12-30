@@ -1,104 +1,349 @@
-# 🤖 Embabel REST API Based Ai Agent: Meeting Summarizer Agent
+# 📝 Blog Title Generator with Embabel Framework
 
-This repository demonstrates how to build intelligent REST API Based Agent using the Embabel Framework and Spring Boot. The application exposes a goal-driven AI agent that can summarize meeting transcripts, extract key discussion points, and identify actionable items, all orchestrated automatically by a sophisticated GOAP-based planner.
+A Spring Boot REST API application powered by the Embabel framework that generates creative and engaging blog titles from meeting transcripts using Google Gemini AI. This intelligent agent uses GOAP (Goal-Oriented Action Planning) to automatically analyze meeting content and produce catchy titles perfect for blog posts.
 
-📖 **Complete Guide**: For detailed explanations and a full code walkthrough, read our comprehensive tutorial.<br>
-👉 [**Embabel Framework: Build a REST API Based AI Agent**](https://bootcamptoprod.com/embabel-framework-rest-api-agent/)
+## 🌟 Features
 
-🎥 **Video Tutorial**: Prefer hands-on learning? Watch our step-by-step implementation guide.<br>
-👉 YouTube Tutorial - [**Build REST API Based AI Agents using Embabel Framework 🚀**](https://youtu.be/CZCLuGRL6pg)
+- **AI-Powered Title Generation**: Leverages Google Gemini's advanced language models to create compelling blog titles
+- **REST API Interface**: Easy integration with any web or mobile application
+- **Goal-Driven Agent**: Uses Embabel's GOAP planning for intelligent task execution
+- **Flexible Input**: Accepts meeting transcripts and generates contextually relevant titles
+- **Multiple Title Options**: Returns several title variations to choose from
 
-<p align="center">
-  <a href="https://youtu.be/CZCLuGRL6pg">
-    <img src="https://img.youtube.com/vi/CZCLuGRL6pg/0.jpg" alt="Build REST API Based AI Agents using Embabel Framework" />
-  </a>
-</p>
+## 🏗️ Architecture
 
-<p align="center">
-  ▶️ <a href="https://youtu.be/CZCLuGRL6pg">Watch on YouTube</a>
-</p>
+The application uses the Embabel framework's agent-based architecture:
 
----
-
-## ✨ What This Project Demonstrates
-
-This application showcases a **production-ready intelligent agent system** with:
-
-- **A REST API Endpoint** for easy integration with any web or mobile application.
-- **Automatic Meeting Summarization** using AI-powered analysis.
-- **Key Points Extraction** highlighting main discussion topics and decisions.
-- **Action Items Identification** with responsible persons and deadlines.
-- **GOAP-based Planning** that automatically orchestrates the multi-step summarization workflow.
-- **Programmatic Agent Invocation** using Embabel's AgentPlatform and AgentInvocation builder.
-
----
+```
+Meeting Transcript (Input)
+         ↓
+  Embabel Agent Platform
+         ↓
+  GOAP Planner (Determines Action Sequence)
+         ↓
+  Google Gemini LLM Integration
+         ↓
+  Generated Blog Titles (Output)
+```
 
 ## 📋 Prerequisites
 
-Before running this application, ensure you have:
+Before you begin, ensure you have the following installed:
 
-- **Java 21** or higher
-- **Google Gemini API Key** (free tier available at [Google AI Studio](https://aistudio.google.com/))
+- **Java 17** or higher
+- **Maven 3.6+**
+- **Google Gemini API Key** - Get yours from [Google AI Studio](https://aistudio.google.com/app/apikey)
 
----
+## 🚀 Installation
 
-## 🚀 Quick Start
+### Step 1: Clone the Repository
 
-### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/BootcampToProd/embabel-meeting-summarizer-agent.git
-cd embabel-meeting-summarizer-agent
+git clone https://github.com/sanidhya02/Embabel-Gemini.git
+cd Embabel-Gemini/embabel-meeting-summarizer-agent
 ```
 
-### 2️⃣ Configure API Key
-Provide your Google Gemini API key as an environment variable. You can set this in your IDE's run configuration or directly in your terminal.
+### Step 2: Set Up Environment Variables
+
+Set your Google Gemini API key as an environment variable:
+
+**Linux/macOS:**
 ```bash
-GOOGLE_GEMINI_API_KEY={YOUR_GOOGLE_GEMINI_API_KEY}
+export GOOGLE_GEMINI_API_KEY=your_api_key_here
 ```
 
-### 3️⃣ Build the Project
+**Windows (Command Prompt):**
+```cmd
+set GOOGLE_GEMINI_API_KEY=your_api_key_here
+```
+
+**Windows (PowerShell):**
+```powershell
+$env:GOOGLE_GEMINI_API_KEY="your_api_key_here"
+```
+
+### Step 3: Build the Project
+
 ```bash
 mvn clean install
 ```
 
-### 4️⃣ Run the Application
+### Step 4: Run the Application
+
 ```bash
 mvn spring-boot:run
 ```
-The application will start on http://localhost:8080.
 
----
+The application will start on `http://localhost:8080`
 
-## 💡 Usage Example
+## 📡 API Usage
 
-Once the application is running, you can interact with the agent by sending a POST request to the API endpoint using any API client like curl or Postman.
+### Generate Blog Title Endpoint
 
-### 📝 cURL REquest
+**Endpoint:** `POST /api/v1/meeting/blog-title`
+
+**Content-Type:** `application/json`
+
+### Request Format
+
+```json
+{
+  "transcript": "Your meeting transcript here..."
+}
 ```
-curl --location 'http://localhost:8080/api/v1/meeting/summarize' \
+
+### cURL Examples
+
+#### Example 1: Tech Product Launch Meeting
+
+```bash
+curl --location 'http://localhost:8080/api/v1/meeting/blog-title' \
 --header 'Content-Type: application/json' \
 --data '{
-    "transcript": "Hi everyone, thanks for joining today. Let’s start with the authentication module, Raj, how’s the backend going? Yeah, the login and registration endpoints are complete, the password reset flow is still pending but I should have it done by Wednesday. Okay, that’s good to hear. Meera, what about the frontend side? The login screen is ready and I’ll integrate Raj’s API tomorrow, but I still need the finalized error messages from QA for the registration part. Alright, I’ll share that document today so you can move forward. Great, thanks. Any blockers from QA? The only issue right now is we don’t have test data for multiple failed login attempts. I can generate a seed script for that before the end of the month. Perfect, that should help. Now for the sprint review next week, can we plan to demo the complete login and registration flow? Yes, that should be fine as long as the APIs are stable. I’ll run regression testing on Friday and update everyone if I find issues. Sounds good, let’s close here then, thanks everyone for the updates."
+  "transcript": "Hi everyone, thanks for joining. Today we are launching our new AI-powered analytics dashboard. The key features include real-time data visualization, predictive insights using machine learning, and seamless integration with popular data sources. Our target audience is enterprise customers in the finance and healthcare sectors. The dashboard reduces analysis time by 70% and provides actionable insights within seconds."
 }'
 ```
 
-### 📊 Example Output
-```
+**Expected Response:**
+```json
 {
-    "keyPoints": [
-        "Backend: Login/registration endpoints complete, password reset pending (Raj).",
-        "Frontend: Login screen ready, registration integration blocked by error messages (Meera).",
-        "QA: Awaiting test data for multiple failed login attempts.",
-        "Sprint Review: Plan to demo complete login/registration flow.",
-        "Regression testing to be performed on Friday."
-    ],
-    "actionItems": [
-        "Raj: Complete password reset flow by Wednesday.",
-        "Meera: Integrate Raj’s API tomorrow.",
-        "Meera: Finalize registration part after receiving error messages from QA.",
-        "QA: Share error messages document today.",
-        "QA: Generate seed script for multiple failed login attempts before end of month.",
-        "QA: Run regression testing on Friday and update everyone if issues found."
-    ]
+  "titles": [
+    "Revolutionizing Data Analytics: Our New AI Dashboard Cuts Analysis Time by 70%",
+    "From Data to Insights in Seconds: Introducing Our Enterprise Analytics Platform",
+    "The Future of Business Intelligence: ML-Powered Dashboard for Finance and Healthcare"
+  ]
 }
 ```
+
+#### Example 2: Marketing Strategy Meeting
+
+```bash
+curl --location 'http://localhost:8080/api/v1/meeting/blog-title' \
+--header 'Content-Type: application/json' \
+--data '{
+  "transcript": "Good morning team. We discussed our Q1 marketing campaign focused on social media engagement. The main points were: increasing Instagram reels by 300%, partnering with micro-influencers, and launching a user-generated content challenge. Budget allocation is 40% social media, 30% influencer partnerships, and 30% content creation. Expected reach is 5 million impressions."
+}'
+```
+
+**Expected Response:**
+```json
+{
+  "titles": [
+    "How We Plan to Reach 5 Million Users: Our Q1 Social Media Strategy Revealed",
+    "The Power of Micro-Influencers: Revolutionizing Our Marketing Approach",
+    "From Zero to Viral: Our 300% Instagram Growth Strategy for Q1"
+  ]
+}
+```
+
+#### Example 3: Product Development Sprint
+
+```bash
+curl --location 'http://localhost:8080/api/v1/meeting/blog-title' \
+--header 'Content-Type: application/json' \
+--data '{
+  "transcript": "Sprint planning session for our mobile app redesign. We are implementing a new dark mode, improving load times by 50%, adding biometric authentication, and redesigning the checkout flow to reduce cart abandonment. User testing showed 85% preference for the new UI. We are targeting a release in 6 weeks with beta testing starting in 3 weeks."
+}'
+```
+
+**Expected Response:**
+```json
+{
+  "titles": [
+    "Cutting Cart Abandonment: Inside Our Mobile App Redesign Journey",
+    "Speed, Security, and Style: How We're Transforming Our Mobile Experience",
+    "From Concept to Launch: Building a Mobile App That Users Actually Love"
+  ]
+}
+```
+
+### Response Structure
+
+```json
+{
+  "titles": [
+    "Primary engaging title",
+    "Alternative creative title",
+    "Another catchy option"
+  ],
+  "timestamp": "2025-12-30T10:30:00Z",
+  "status": "success"
+}
+```
+
+## 🔧 Configuration
+
+### application.properties
+
+```properties
+# Server Configuration
+server.port=8080
+
+# Embabel Configuration
+embabel.default-llm=gemini-2.0-flash-exp
+
+# Logging Configuration
+logging.level.com.embabel=DEBUG
+logging.level.org.springframework.ai=INFO
+
+# Gemini API Configuration (via environment variable)
+# GOOGLE_GEMINI_API_KEY=${GOOGLE_GEMINI_API_KEY}
+```
+
+### Customizing Title Generation
+
+You can customize the title generation behavior by modifying the agent's action parameters:
+
+```java
+@Action
+public BlogTitles generateTitles(MeetingTranscript transcript, OperationContext context) {
+    String prompt = """
+        Generate 5 compelling blog titles based on this meeting transcript:
+        %s
+        
+        Guidelines:
+        - Make titles attention-grabbing and click-worthy
+        - Include specific numbers or statistics when available
+        - Keep titles between 50-70 characters
+        - Use power words and emotional triggers
+        """.formatted(transcript.getContent());
+    
+    return context.ai()
+        .withLlm(GoogleGeminiModels.GEMINI_2_FLASH)
+        .createObject(prompt, BlogTitles.class);
+}
+```
+
+## 🧪 Testing
+
+### Run Unit Tests
+
+```bash
+mvn test
+```
+
+### Run Integration Tests
+
+```bash
+mvn verify
+```
+
+### Quick Manual Test
+
+```bash
+curl --location 'http://localhost:8080/api/v1/meeting/blog-title' \
+--header 'Content-Type: application/json' \
+--data '{
+  "transcript": "Quick test meeting about launching a new feature next week."
+}'
+```
+
+## 📚 Project Structure
+
+```
+embabel-meeting-summarizer-agent/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── bootcamptoprod/
+│   │   │           ├── agent/
+│   │   │           │   └── BlogTitleAgent.java          # Main agent
+│   │   │           ├── controller/
+│   │   │           │   └── BlogTitleController.java     # REST endpoint
+│   │   │           ├── model/
+│   │   │           │   ├── MeetingTranscript.java       # Input model
+│   │   │           │   └── BlogTitles.java              # Output model
+│   │   │           └── config/
+│   │   │               └── GeminiConfig.java            # LLM configuration
+│   │   └── resources/
+│   │       └── application.properties
+│   └── test/
+└── pom.xml
+```
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**1. API Key Error**
+```
+Error: GOOGLE_GEMINI_API_KEY not found
+```
+**Solution:** Ensure your environment variable is set correctly:
+```bash
+echo $GOOGLE_GEMINI_API_KEY  # Should display your API key
+```
+
+**2. Connection Timeout**
+```
+Error: Connection timeout to Google Gemini API
+```
+**Solution:** Check your internet connection and verify the API key is valid at [Google AI Studio](https://aistudio.google.com/)
+
+**3. Port Already in Use**
+```
+Error: Port 8080 is already in use
+```
+**Solution:** Change the port in `application.properties` or kill the process using port 8080:
+```bash
+# Find process
+lsof -i :8080
+# Kill process
+kill -9 <PID>
+```
+
+## 🔐 Security Best Practices
+
+1. **Never commit API keys** to version control
+2. Use environment variables or secure vaults (AWS Secrets Manager, HashiCorp Vault)
+3. Implement rate limiting for production deployments
+4. Add authentication/authorization to your API endpoints
+5. Rotate API keys regularly
+
+## 📈 Performance Optimization
+
+- **Model Selection**: Use `gemini-2.0-flash-exp` for faster responses, `gemini-pro` for higher quality
+- **Caching**: Implement response caching for repeated requests
+- **Batch Processing**: Consider batch API calls for multiple transcripts
+- **Async Processing**: Use asynchronous endpoints for long-running operations
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is part of the Embabel-Gemini repository. Please refer to the main repository for license information.
+
+## 🔗 Related Resources
+
+- [Embabel Framework Documentation](https://docs.embabel.com/)
+- [Google Gemini API Documentation](https://ai.google.dev/docs)
+- [Spring Boot Documentation](https://spring.io/projects/spring-boot)
+- [BootcampToProd Tutorial Series](https://bootcamptoprod.com/embabel-framework-guide/)
+
+## 💡 Use Cases
+
+- **Content Marketing**: Generate blog titles from meeting notes
+- **Documentation**: Create engaging titles for technical documentation
+- **Internal Communications**: Produce catchy titles for company updates
+- **Social Media**: Generate post titles from team discussions
+- **Product Launches**: Create compelling titles for product announcements
+
+## 📞 Support
+
+For questions or issues:
+- Open an issue on GitHub
+- Check the [Embabel Framework Guide](https://bootcamptoprod.com/embabel-framework-guide/)
+- Visit the [Embabel Community](https://github.com/embabel/embabel-agent)
+
+---
+
+**Built with ❤️ using [Embabel Framework](https://github.com/embabel/embabel-agent) and Google Gemini**
